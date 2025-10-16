@@ -11,6 +11,10 @@
 <body>
   <header class="topbar">
     <h1>Property Manager</h1>
+    <div style="margin-left:auto;display:flex;gap:8px;align-items:center;">
+      <span id="whoami" class="muted"></span>
+      <button id="logout-btn" class="secondary">Logout</button>
+    </div>
   </header>
 
   <main class="container">
@@ -88,7 +92,32 @@
   </main>
 
   <div id="toast" class="toast hidden"></div>
+  
+  <script>
+    (function guard(){
+      const auth = sessionStorage.getItem('AUTH');
+      if(auth){
+        const u = sessionStorage.getItem('auth_user') || '';
+        const who = document.getElementById('whoami');
+        if (who) who.textContent = u ? `Signed in as ${u}` : '';
+      } else {
+        location.replace('login.html');
+      }
+    })();
 
+    // Logout
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.getElementById('logout-btn');
+      if(btn){
+        btn.addEventListener('click', () => {
+          sessionStorage.removeItem('auth');
+          sessionStorage.removeItem('auth_user');
+          location.replace('login.html');
+        });
+      }
+    });
+  </script>
+  
   <script src="script.js"></script>
 </body>
 

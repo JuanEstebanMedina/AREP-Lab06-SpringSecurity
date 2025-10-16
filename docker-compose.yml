@@ -30,8 +30,7 @@ services:
       mysql:
         condition: service_healthy
     environment:
-      # REMOTO (DB en otra máquina/EC2/RDS): descomenta y ajusta la IP privada/DNS:
-      DB_URL: jdbc:mysql://172.31.34.200:3306/properties?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+      DB_URL: jdbc:mysql://mysql:3306/properties?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
       DB_USER: root
       DB_PASS: root
       SPRING_PROFILES_ACTIVE: prod

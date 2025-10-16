@@ -1,5 +1,5 @@
 // ---------- Config ----------
-const API_BASE = ""; // mismo origen
+const API_BASE = "https://api-jemrareptaller6.duckdns.org";
 const ENDPOINT = `${API_BASE}/api/properties`;
 
 // ---------- State ----------
@@ -24,29 +24,32 @@ function showToast(msg, timeout = 2000) {
 
 // ---------- HTTP helper ----------
 async function http(method, url, body) {
+  const AUTH = sessionStorage.getItem('AUTH');
   const init = {
     method,
-    headers: { "Content-Type": "application/json", "Accept": "application/json" }
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+      ...(AUTH ? { "Authorization": AUTH } : {})
+    }
   };
   if (body) init.body = JSON.stringify(body);
 
   const res = await fetch(url, init);
 
+  if (res.status === 401) {
+    sessionStorage.removeItem('AUTH');
+    location.href = 'login.html';
+    return;
+  }
   if (res.status === 204) return method === "GET" ? [] : null;
   if (res.ok) {
     const text = await res.text();
-    try { return text ? JSON.parse(text) : null; }
-    catch { return text; }
+    try { return text ? JSON.parse(text) : null; } catch { return text; }
   }
-
-  let errMsg = `${res.status} ${res.statusText}`;
-  try {
-    const j = await res.json();
-    if (j?.message) errMsg += ` - ${j.message}`;
-    else if (j?.errors) errMsg += ` - ${JSON.stringify(j.errors)}`;
-    else errMsg += ` - ${JSON.stringify(j)}`;
-  } catch { }
-  throw new Error(errMsg);
+  let msg = `${res.status} ${res.statusText}`;
+  try { const j = await res.json(); if (j?.message) msg += ` - ${j.message}`; } catch { }
+  throw new Error(msg);
 }
 
 // ---------- Normalize ----------

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+
+<body style="max-width:420px;margin:40px auto;font-family:system-ui">
+    <h1>Login</h1>
+    <form id="login-form">
+        <label for="user">User</label><br />
+        <input id="user" type="text" required style="width:100%" /><br /><br />
+        <label for="password">Password</label><br />
+        <input id="password" type="password" required style="width:100%" /><br /><br />
+        <button type="submit">Sign in</button>
+        <p id="msg" style="color:#B00"></p>
+    </form>
+
+    <script>
+        const API_BASE = "https://api-jemrareptaller6.duckdns.org";
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const user = document.getElementById('user').value.trim();
+            const pass = document.getElementById('password').value;
+            const basic = 'Basic ' + btoa(`${user}:${pass}`);
+
+            const res = await fetch('./api/properties?page=0&size=1', { headers: { Authorization: basic } });
+
+            if (res.ok) {
+                sessionStorage.setItem('AUTH', basic);
+                location.href = 'index.html';
+            } else {
+                document.getElementById('msg').textContent = 'Credenciales inválidas';
+            }
+        });
+    </script>
+</body>
+
+</html>
