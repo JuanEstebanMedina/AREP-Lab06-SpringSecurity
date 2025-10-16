@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Property Manager</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <header class="topbar">
+    <h1>Property Manager</h1>
+  </header>
+
+  <main class="container">
+    <!-- Left: Form -->
+    <section class="panel">
+      <h2 id="form-title">Add New Property</h2>
+
+      <form id="property-form">
+        <div class="field">
+          <label for="address">Address</label>
+          <input id="address" name="address" type="text" placeholder="Enter address" required />
+        </div>
+
+        <div class="field">
+          <label for="price">Price</label>
+          <input id="price" name="price" type="number" step="0.01" placeholder="Enter price" required />
+        </div>
+
+        <div class="field">
+          <label for="size">Size (sq ft)</label>
+          <input id="size" name="size" type="number" step="1" placeholder="Enter size" required />
+        </div>
+
+        <div class="field">
+          <label for="description">Description</label>
+          <textarea id="description" name="description" rows="4" placeholder="Enter description" required></textarea>
+        </div>
+
+        <div class="actions">
+          <button type="submit" id="submit-btn">Add Property</button>
+          <button type="button" id="cancel-edit-btn" class="secondary hidden">Cancel</button>
+        </div>
+      </form>
+
+      <p class="hint">* All fields are required. Price & Size must be positive.</p>
+    </section>
+
+    <!-- Right: List -->
+    <section class="panel">
+      <div class="list-header">
+        <h2>Manage Properties</h2>
+        <!-- q: texto libre address/description -->
+        <input id="search" type="search" placeholder="Search (address or description)..." />
+      </div>
+
+      <!-- Filtros avanzados -->
+      <div class="filters">
+        <input id="f-address" type="text" placeholder="Address contains..." />
+        <input id="f-min-price" type="number" step="0.01" placeholder="Min price" />
+        <input id="f-max-price" type="number" step="0.01" placeholder="Max price" />
+        <input id="f-min-size" type="number" step="1" placeholder="Min size" />
+        <input id="f-max-size" type="number" step="1" placeholder="Max size" />
+        <button id="apply-filters" class="secondary">Apply</button>
+        <button id="clear-filters" class="secondary">Clear</button>
+      </div>
+
+      <div class="table-wrapper">
+        <table id="props-table">
+          <thead>
+            <tr>
+              <th>Address</th>
+              <th>Price</th>
+              <th>Size</th>
+              <th>Description</th>
+              <th style="width:120px;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="props-tbody">
+            <!-- rows go here -->
+          </tbody>
+        </table>
+      </div>
+      <div id="pager" class="pager"></div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
