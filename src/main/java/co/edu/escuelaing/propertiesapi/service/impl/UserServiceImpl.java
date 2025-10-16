@@ -43,6 +43,8 @@ public class UserServiceImpl implements UserService {
                     .build();
             userRepository.save(adminUser);
             System.out.println("Admin user created");
+        } else {
+            System.out.println("Admin user already exists");
         }
     }
 

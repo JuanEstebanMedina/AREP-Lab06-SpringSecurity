@@ -265,7 +265,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       if (editId == null) {
         await createProperty(data);
-        // ve a la primera página para ver lo nuevo si estás ordenando por id desc
+        // ve a la primera página para ver lo nuevo
         await loadPage(0);
       } else {
         await updateProperty(editId, data);

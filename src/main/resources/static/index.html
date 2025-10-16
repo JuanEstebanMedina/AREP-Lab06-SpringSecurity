@@ -110,7 +110,7 @@
       const btn = document.getElementById('logout-btn');
       if(btn){
         btn.addEventListener('click', () => {
-          sessionStorage.removeItem('auth');
+          sessionStorage.removeItem('AUTH');
           sessionStorage.removeItem('auth_user');
           location.replace('login.html');
         });

@@ -26,7 +26,7 @@
             const pass = document.getElementById('password').value;
             const basic = 'Basic ' + btoa(`${user}:${pass}`);
 
-            const res = await fetch('./api/properties?page=0&size=1', { headers: { Authorization: basic } });
+            const res = await fetch(`${API_BASE}/api/properties?page=0&size=1`, { headers: { Authorization: basic } });
 
             if (res.ok) {
                 sessionStorage.setItem('AUTH', basic);

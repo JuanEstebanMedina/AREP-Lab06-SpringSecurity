@@ -23,16 +23,18 @@ services:
       retries: 10
 
   app:
-    build: .
+    # build: .
+    image: rivitas13/arep-spring-security:latest
     container_name: properties-api
     restart: always
     depends_on:
       mysql:
         condition: service_healthy
     environment:
-      DB_URL: jdbc:mysql://mysql:3306/properties?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
-      DB_USER: root
-      DB_PASS: root
+      # SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/properties?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+      SPRING_DATASOURCE_URL: jdbc:mysql://properties-db.czom6keqa1uc.us-east-1.rds.amazonaws.com:3306/properties_db?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
       SPRING_PROFILES_ACTIVE: prod
     ports:
       - "8080:8080"
