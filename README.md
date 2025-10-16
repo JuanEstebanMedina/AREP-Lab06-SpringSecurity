@@ -257,39 +257,40 @@ server {
 
 ```yaml
 version: "3.8"
-services:
-mysql:
-	image: mysql:8.0
-	container_name: mysql_props
-	restart: unless-stopped
-	environment:
-	MYSQL_ROOT_PASSWORD: root
-	MYSQL_DATABASE: properties
-	volumes:
-	- mysql_data:/var/lib/mysql
-	healthcheck:
-	test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-proot"]
-	interval: 5s
-	timeout: 3s
-	retries: 10
 
-app:
-	image: rivitas13/arep-spring-security:latest
-	container_name: properties-api
-	restart: unless-stopped
-	depends_on:
-	mysql:
-		condition: service_healthy
-	environment:
-	SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/properties?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
-	SPRING_DATASOURCE_USERNAME: root
-	SPRING_DATASOURCE_PASSWORD: root
-	SPRING_PROFILES_ACTIVE: prod
-	ports:
-	- "8080:8080"
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_props
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: properties
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-proot"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  app:
+    image: rivitas13/arep-spring-security:latest
+    container_name: properties-api
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/properties?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_PROFILES_ACTIVE: prod
+    ports:
+      - "8080:8080"
 
 volumes:
-mysql_data:
+  mysql_data:
 ```
 
 Levantar todo:
